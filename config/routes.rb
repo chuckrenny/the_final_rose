@@ -7,5 +7,7 @@ Rails.application.routes.draw do
 
   resources :contestants, only: [:show]
 
-  resources :outings, only: [:show]
+  resources :outings, only: [:show] do
+    resources :contestant_outings, only: [:destroy]
+  end
 end

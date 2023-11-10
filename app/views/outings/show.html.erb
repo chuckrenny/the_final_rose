@@ -3,3 +3,10 @@
 <p>Date: <%= @outing.date %></p>
 <p>Total Contestants: <%= @outing.total_contestant_count %></p>
 <p>Contestant Names: <%= @outing.all_contestant_names.join(', ') %></p>
+
+<h3>Remove a Contestant from the Outing</h3>
+<p><% @outing.contestants.each do |contestant| %></p>
+  <section id="outing-contestant-<%= contestant.name %>"></p>
+    <p><%= contestant.name %> <%= link_to "Remove", outing_contestant_outing_path(@outing.id, contestant), method: :delete %></p>
+  </section>
+<% end %>

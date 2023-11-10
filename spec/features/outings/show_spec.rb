@@ -12,8 +12,12 @@ RSpec.describe "Outing Show Page", type: :feature do
     @outing3 = Outing.create!(name: 'Kickball', location: 'Los Angeles', date: '10/01/24')
 
     @contestant1_outing1 = ContestantOuting.create!(contestant: @contestant1, outing: @outing1)
-    @contestant1_outing2 = ContestantOuting.create!(contestant: @contestant2, outing: @outing1)
-    @contestant1_outing3 = ContestantOuting.create!(contestant: @contestant3, outing: @outing1)
+    @contestant2_outing1 = ContestantOuting.create!(contestant: @contestant2, outing: @outing1)
+    @contestant3_outing1 = ContestantOuting.create!(contestant: @contestant3, outing: @outing1)
+
+    @contestant1_outing2 = ContestantOuting.create!(contestant: @contestant1, outing: @outing2)
+    @contestant2_outing2 = ContestantOuting.create!(contestant: @contestant2, outing: @outing2)
+    @contestant3_outing2 = ContestantOuting.create!(contestant: @contestant3, outing: @outing2)
   end
 
   # US 4
@@ -25,5 +29,21 @@ RSpec.describe "Outing Show Page", type: :feature do
     expect(page).to have_content("Date: #{@outing1.date}")
     expect(page).to have_content("Total Contestants: #{@outing1.total_contestant_count}")
     expect(page).to have_content("Contestant Names: #{@contestant1.name}, #{@contestant2.name}, #{@contestant3.name}")
+  end
+
+  # US 5
+  it "displays a link to remove a contestant's name from one outings show page and does not affect the other outing show pages" do
+    visit outing_path(@outing1.id)
+
+    within("#outing-contestant-#{@contestant1.name}") do
+      expect(page).to have_content("#{@contestant1.name}")
+      expect(page).to have_link("Remove")
+      click_link("Remove")
+    end
+
+    expect(page).to_not have_content("#{@contestant1.name}")
+
+    visit outing_path(@outing2.id)
+    expect(page).to have_content("#{@contestant1.name}")
   end
 end
