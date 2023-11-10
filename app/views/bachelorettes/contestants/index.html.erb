@@ -1,4 +1,5 @@
-<h1><%= @bachelorette %> Contestants Show</h1>
+<h1><%= @bachelorette.name %> Contestants Show</h1>
+<p>These Contestants are from these hometowns: <%= @bachelorette.contestants_hometowns.join(", ") %></p>
 <p><% @contestants.each do |contestant| %></p>
   <section id="contestant-<%= contestant.name %>"></p>
     <p>Name: <%= link_to "#{contestant.name}", contestant_path(contestant.id) %></p>

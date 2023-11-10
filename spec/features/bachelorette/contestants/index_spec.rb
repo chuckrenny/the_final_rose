@@ -6,6 +6,7 @@ RSpec.describe 'Bachelorette Contestants Index Page', type: :feature do
     @contestant1 = @bachelorette.contestants.create!(name: "Harold", age: 20, hometown: "Houston")
     @contestant2 = @bachelorette.contestants.create!(name: "Paul", age: 24, hometown: "Plano")
     @contestant3 = @bachelorette.contestants.create!(name: "Jeremy", age: 21, hometown: "Tampa")
+    @contestant4 = @bachelorette.contestants.create!(name: "Harold_v2", age: 21, hometown: "Houston")
   end
 
   # US 2
@@ -24,5 +25,12 @@ RSpec.describe 'Bachelorette Contestants Index Page', type: :feature do
         visit bachelorette_contestants_path(@bachelorette.id)
       end
     end
+  end
+
+  # US 7
+  it "displays a unique list of all contestant hometowns" do
+    visit bachelorette_contestants_path(@bachelorette.id)
+
+    expect(page).to have_content("These Contestants are from these hometowns: #{@contestant1.hometown}, #{@contestant2.hometown}, #{@contestant3.hometown}")
   end
 end
