@@ -1,1 +1,5 @@
-<h1><%= @outing.name %> Show Page</h1>
+<h1><%= @outing.name %></h1>
+<p>Location: <%= @outing.location %></p>
+<p>Date: <%= @outing.date %></p>
+<p>Total Contestants: <%= @outing.total_contestant_count %></p>
+<p>Contestant Names: <%= @outing.all_contestant_names.join(', ') %></p>

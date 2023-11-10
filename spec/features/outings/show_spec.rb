@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Outing, type: :model do
+RSpec.describe "Outing Show Page", type: :feature do
   before :each do
     @bachelorette = Bachelorette.create!(name: "Danielle Smithson", season_number: 4, description: "Does Danny Find Love?")
     @contestant1 = @bachelorette.contestants.create!(name: "Harold", age: 20, hometown: "Houston")
@@ -16,28 +16,14 @@ RSpec.describe Outing, type: :model do
     @contestant1_outing3 = ContestantOuting.create!(contestant: @contestant3, outing: @outing1)
   end
 
-  describe "relationships" do
-    it {should have_many(:contestant_outings)}
-    it {should have_many(:contestants).through(:contestant_outings)}
-  end
+  # US 4
+  it "displays outings attributes, total contestants at the outing, and the names of all contestants at the outing" do
+    visit outing_path(@outing1.id)
 
-  describe "validations" do
-    it {should validate_presence_of(:name)}
-    it {should validate_presence_of(:location)}
-    it {should validate_presence_of(:date)}
-  end
-
-  describe "instance methods" do
-    describe "#total_contestant_count" do
-      it "returns the all contestants from an outing" do
-        expect(@outing1.total_contestant_count).to eq(3)
-      end
-    end
-
-    describe "#all_contestant_names" do
-      it "returns all contestant names from an outing" do
-        expect(@outing1.all_contestant_names).to eq(["#{@contestant1.name}", "#{@contestant2.name}", "#{@contestant3.name}"])
-      end
-    end
+    expect(page).to have_content("#{@outing1.name}")
+    expect(page).to have_content("Location: #{@outing1.location}")
+    expect(page).to have_content("Date: #{@outing1.date}")
+    expect(page).to have_content("Total Contestants: #{@outing1.total_contestant_count}")
+    expect(page).to have_content("Contestant Names: #{@contestant1.name}, #{@contestant2.name}, #{@contestant3.name}")
   end
 end
