@@ -24,4 +24,11 @@ RSpec.describe Bachelorette, type: :feature do
     expect(page).to have_content(@contestant2.name)
     expect(page).to have_content(@contestant3.name)
   end
+
+  # US 6
+  it "displays the average age of all bachelorette's contestants" do
+    visit bachelorette_path(@bachelorette.id)
+
+    expect(page).to have_content("Average Age of Contestants: 21.67")
+  end
 end
